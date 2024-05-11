@@ -1,12 +1,12 @@
-#include <lauxlib.h>
-#include <lua.h>
-#include <lualib.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
 #include <emscripten.h>
+
 
 int boot_lua(lua_State* L);
 static lua_State *wasm_lua_state = NULL;
@@ -19,39 +19,6 @@ static const unsigned char lua_main_program[] = {__LUA_MAIN__};
 // This line will be injected by emcc-lua as export functions to WASM declaration
 __LUA_FUNCTION_DECLARATIONS__
 
-// This function is for debug to see an C <-> Lua stack values
-// void dumpStack(lua_State *L) {
-//   int i;
-//   int stackSize = lua_gettop(L);
-//   for (i = stackSize; i >= 1; i--) {
-//     int stackType = lua_type(L, i);
-//     printf("Stack[%2d-%10s]:", i, lua_typename(L, stackType));
-// 
-//     switch (stackType) {
-//       case LUA_TNUMBER:
-//         printf("%f", lua_tonumber(L, i));
-//         break;
-//       case LUA_TBOOLEAN:
-//         if (lua_toboolean(L, i)) {
-//           printf("true");
-//         } else {
-//           printf("false");
-//         }
-//         break;
-//       case LUA_TSTRING:
-//         printf("%s", lua_tostring(L, i));
-//         break;
-//       case LUA_TNIL:
-//         printf("nil");
-//         break;
-//       default:
-//         printf("%s", lua_typename(L, stackType));
-//         break;
-//     }
-//     printf("\n");
-//   }
-//   printf("\n");
-// }
 
 /* Copied from lua.c */
 
